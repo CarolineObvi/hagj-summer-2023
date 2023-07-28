@@ -6,7 +6,10 @@ public class Crouch : MonoBehaviour
 {
     [SerializeField] private InputController input = null;
     [SerializeField] private Collider2D standingCollider;
-    [SerializeField] private Move move;
+    [SerializeField] private Transform overheadCheckCollider;
+    [SerializeField] private LayerMask obstacleLayer;
+    private Move move;
+    const float overheadCheckRadius = 0.2f;
     private bool desiredCrouch;
 
     // Start is called before the first frame update
@@ -24,6 +27,14 @@ public class Crouch : MonoBehaviour
 
     void FixedUpdate()
     {
-        standingCollider.enabled = !input.RetrieveCrouchHoldInput();
+        if (input.RetrieveCrouchHoldInput() && move.groundCheck.GetOnGround())
+        {
+            standingCollider.enabled = false;
+        }
+        else if (!Physics2D.OverlapCircle(overheadCheckCollider.position, overheadCheckRadius, obstacleLayer) || !move.groundCheck.GetOnGround())
+        {
+            standingCollider.enabled = true;
+        }
+        //standingCollider.enabled = !input.RetrieveCrouchHoldInput();
     }
 }

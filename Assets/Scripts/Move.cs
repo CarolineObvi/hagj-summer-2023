@@ -7,6 +7,7 @@ public class Move : MonoBehaviour
 
     [SerializeField] private InputController input = null;
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
+    [SerializeField] private Collider2D standingCollider;
     private float originalMaxSpeed;
     [SerializeField, Range(0f, 10f)] private float maxCrouchSpeed = 2f;
     [SerializeField, Range(0f, 100f)] private float maxAcceleration = 35f;
@@ -16,7 +17,7 @@ public class Move : MonoBehaviour
     private Vector2 velocity;
     private Vector2 targetVelocity;
     private Rigidbody2D body;
-    private GroundCheck groundCheck;
+    public GroundCheck groundCheck;
 
     private float maxSpeedChange;
     private float acceleration;
@@ -33,7 +34,7 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (input.RetrieveCrouchHoldInput())
+        if (!standingCollider.enabled)
         {
             maxSpeed = maxCrouchSpeed;
         }
