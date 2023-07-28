@@ -7,6 +7,8 @@ public class Move : MonoBehaviour
 
     [SerializeField] private InputController input = null;
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
+    private float originalMaxSpeed;
+    [SerializeField, Range(0f, 10f)] private float maxCrouchSpeed = 2f;
     [SerializeField, Range(0f, 100f)] private float maxAcceleration = 35f;
     [SerializeField, Range(0f, 100f)] private float maxAirAcceleration = 20f;
 
@@ -25,11 +27,21 @@ public class Move : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
+        originalMaxSpeed = maxSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (input.RetrieveCrouchHoldInput())
+        {
+            maxSpeed = maxCrouchSpeed;
+        }
+        else
+        {
+            maxSpeed = originalMaxSpeed;
+        }
+
         direction.x = input.RetrieveMoveInput();
         targetVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed - groundCheck.GetFriction(), 0f);
     }
@@ -42,6 +54,15 @@ public class Move : MonoBehaviour
         acceleration = onGround ? maxAcceleration : maxAirAcceleration;
         maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocity.x, maxSpeedChange);
+
+        if (groundCheck.GetOnGround() && input.RetrieveMoveInput() == 0)
+        {
+            body.gravityScale = 0f;
+        }
+        else
+        {
+            body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
 
         body.velocity = velocity;
     }

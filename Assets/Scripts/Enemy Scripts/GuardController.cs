@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GuardController : MonoBehaviour
 {
-    [Header("Detection")]
+    [Header("Patrol")]
     public GameObject[] waypoints; // the path the guard moves across
     private int currentWaypoint = 0;
     public float patrolSpeed = 1.5f;
@@ -18,13 +18,22 @@ public class GuardController : MonoBehaviour
     public float viewDistance = 3f; // view distance of guard
     private float originalViewDistance; // original view distance
     public float viewAngle = 60f; // angle of detection
+    public LineRenderer visualLineOfSight;
+
+    [Header("Sound")]
+    public Move playerSoundLevels;
+    public float walkingHearing = 7f;
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform; // assigns player
+        playerSoundLevels = GameObject.FindGameObjectWithTag("Player").GetComponent<Move>();
+
         originalViewDistance = viewDistance;
         detectionTimer = detectionLength;
+        visualLineOfSight.useWorldSpace = true;
     }
 
     // Update is called once per frame
@@ -32,14 +41,29 @@ public class GuardController : MonoBehaviour
     {
         Patrol();
 
+        visualLineOfSight.SetPosition(0, transform.position);
+
         if (CanSeePlayer())
         {
             isDetectingPlayer = true;
+            visualLineOfSight.SetPosition(1, player.position);
             Detection();
         }
         else
         {
+            RaycastHit2D hit;
+            hit = Physics2D.Raycast(transform.position, transform.forward, viewDistance, viewMask);
+            if (hit)
+            {
+                visualLineOfSight.SetPosition(1, hit.point);
+            }
+            else
+            {
+                visualLineOfSight.SetPosition(1, transform.position + (transform.forward * viewDistance));
+            }
+
             detectionTimer = detectionLength;
+            viewDistance = originalViewDistance;
             isDetectingPlayer = false;
         }
 
@@ -93,8 +117,12 @@ public class GuardController : MonoBehaviour
 
             if (angleBetweenGuardAndPlayer < viewAngle / 2f)
             {
-                if (!Physics.Linecast(transform.position, player.position, viewMask))
+                if (!Physics2D.Linecast(transform.position, player.position, viewMask))
                 {
+                    if (!isDetectingPlayer)
+                    {
+                        StartCoroutine(LengthenView());
+                    }
                     return true;
                 }
             }
@@ -109,5 +137,14 @@ public class GuardController : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay (transform.position, transform.forward * viewDistance); // draws ray to represent vision distance
+    }
+
+    IEnumerator LengthenView()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            yield return new WaitForSeconds(.75f);
+            viewDistance += viewDistance * 0.6f;
+        }
     }
 }
