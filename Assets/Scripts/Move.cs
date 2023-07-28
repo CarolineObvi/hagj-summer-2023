@@ -18,6 +18,9 @@ public class Move : MonoBehaviour
     private Vector2 targetVelocity;
     private Rigidbody2D body;
     public GroundCheck groundCheck;
+    //Noise Variable (Idle = 0, Crouch = 1, Walk = 2, Run = 3)
+    public int noiseProduced;
+    public bool isCrouching;
 
     private float maxSpeedChange;
     private float acceleration;
@@ -45,6 +48,17 @@ public class Move : MonoBehaviour
 
         direction.x = input.RetrieveMoveInput();
         targetVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed - groundCheck.GetFriction(), 0f);
+
+        //Noise
+
+         if (Input.GetKeyDown(KeyCode.C))
+            isCrouching = true;
+
+         if (Input.GetKeyUp(KeyCode.C))
+            isCrouching = false;
+
+        if (isCrouching == true)
+            noiseProduced = 1;
     }
 
     void FixedUpdate()
@@ -67,4 +81,6 @@ public class Move : MonoBehaviour
 
         body.velocity = velocity;
     }
+
+
 }
