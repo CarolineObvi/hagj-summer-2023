@@ -1,20 +1,26 @@
 fileFormatVersion: 2
-guid: 48f708818a86f8348974ed12ed0c8a0c
+guid: 8a4dab4d00179904ca27fe4a331452ad
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -1288182169105168823
-    second: Idle
+    second: 'Idle '
   - first:
       74: 7176209919637214875
-    second: Action
+    second: Walk
   - first:
       74: 2302441737366764887
     second: metarigAction
   - first:
-      74: -3584619823844665163
-    second: metarig|Action
+      74: -2889085019725202202
+    second: Walk
+  - first:
+      74: -5598965749174148383
+    second: metarigAction.001
+  - first:
+      74: -887982601649841707
+    second: metarig|metarigAction
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -45,18 +51,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: 'Idle '
       takeName: 'Idle '
       internalID: 0
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -74,18 +80,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Action
-      takeName: Action
+      name: Walk
+      takeName: Action.001
       internalID: 0
       firstFrame: 0
-      lastFrame: 48
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
