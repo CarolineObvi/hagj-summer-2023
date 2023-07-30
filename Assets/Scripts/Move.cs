@@ -64,20 +64,12 @@ public class Move : MonoBehaviour
     void FixedUpdate()
     {
         onGround = groundCheck.GetOnGround();
+        Debug.Log(groundCheck.GetOnGround());
         velocity = body.velocity;
 
         acceleration = onGround ? maxAcceleration : maxAirAcceleration;
         maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocity.x, maxSpeedChange);
-
-        if (groundCheck.GetOnGround() && input.RetrieveMoveInput() == 0)
-        {
-            body.gravityScale = 0f;
-        }
-        else
-        {
-            body.constraints = RigidbodyConstraints2D.FreezeRotation;
-        }
 
         body.velocity = velocity;
     }

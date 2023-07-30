@@ -312,7 +312,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 353074992}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &202542144
 MeshRenderer:
@@ -383,7 +383,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000001, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &353074987
 GameObject:
@@ -1347,14 +1347,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958873857}
-  m_LocalRotation: {x: -0, y: -0, z: 0.18471792, w: 0.98279166}
-  m_LocalPosition: {x: 7.64, y: -1.42, z: -0.022615}
+  m_LocalRotation: {x: -0, y: -0, z: 0.38808644, w: 0.921623}
+  m_LocalPosition: {x: 7.64, y: -0.82, z: -0.022615}
   m_LocalScale: {x: 4.3881416, y: 4.3881416, z: 0.9696477}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 21.289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.671}
 --- !u!50 &1958873862
 Rigidbody2D:
   serializedVersion: 4
@@ -1483,6 +1483,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8657372497228442216, guid: b2694a9e890736447aa2cb3a5d816ca8, type: 3}
+      propertyPath: fallStunLength
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1564,6 +1568,10 @@ PrefabInstance:
     - target: {fileID: 3497905053077385184, guid: 639ed00d299997347b36cb4b071cfe90, type: 3}
       propertyPath: m_Name
       value: Guard and Patrol Path
+      objectReference: {fileID: 0}
+    - target: {fileID: 3497905053077385184, guid: 639ed00d299997347b36cb4b071cfe90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8596623467482481294, guid: 639ed00d299997347b36cb4b071cfe90, type: 3}
       propertyPath: m_RootOrder
