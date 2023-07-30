@@ -15,6 +15,8 @@ public class GuardController : MonoBehaviour
     private bool isDetectingPlayer; // is the guard detecting the player?
     private float detectionTimer; // how long the player's been in the guard's detection cone
     public float detectionLength = 1f; // how long until the guard detect the player
+    private float audioDetectionTimer; 
+    public float audioDetectionLength = 3f;
     public float viewDistance = 3f; // view distance of guard
     private float originalViewDistance; // original view distance
     public float viewAngle = 60f; // angle of detection
@@ -22,7 +24,8 @@ public class GuardController : MonoBehaviour
 
     [Header("Sound")]
     public Move playerSoundLevels;
-    public float walkingHearing = 7f;
+    public float walkingHearing = 10f;
+    public float crouchHearing = 4f;
 
 
     // Start is called before the first frame update
@@ -40,6 +43,7 @@ public class GuardController : MonoBehaviour
     void Update()
     {
         Patrol();
+        Debug.Log(Vector2.Distance(transform.position, player.transform.position));
 
         visualLineOfSight.SetPosition(0, transform.position);
 
