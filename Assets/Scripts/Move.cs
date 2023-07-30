@@ -71,11 +71,6 @@ public class Move : MonoBehaviour
         maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocity.x, maxSpeedChange);
 
-        if (groundCheck.GetOnGround() && input.RetrieveMoveInput() == 0)
-        {
-            body.gravityScale = 0f;
-        }
-
         body.velocity = velocity;
     }
 

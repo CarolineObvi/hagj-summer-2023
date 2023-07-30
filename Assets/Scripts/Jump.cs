@@ -45,6 +45,7 @@ public class Jump : MonoBehaviour
 
         if (onGround)
         {
+            body.gravityScale = 0;
             jumpPhase = 0;
         }
 
@@ -64,15 +65,15 @@ public class Jump : MonoBehaviour
             body.gravityScale = upwardMovementMultiplier;
         }
 
-        else if (!input.RetrieveJumpHoldInput() || body.velocity.y < 0)
+        else if ((!input.RetrieveJumpHoldInput() || body.velocity.y < 0) && !onGround)
         {
             body.gravityScale = downwardMovementMultiplier;
         }
 
-        else if (body.velocity.y == 0)
+        /*else if (body.velocity.y == 0)
         {
             body.gravityScale = defaultGravityScale;
-        }
+        }*/
 
         body.velocity = velocity;
     }
