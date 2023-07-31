@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 4275896373450433801}
   - component: {fileID: 7905829230428634995}
   m_Layer: 0
-  m_Name: WomanModel
+  m_Name: WomanModelSitting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -621,7 +621,7 @@ Animator:
   m_GameObject: {fileID: 3466885181516070835}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3e7d432b106410e4384b3190a9e87340, type: 3}
-  m_Controller: {fileID: 9100000, guid: 96c34b36411f2ae479f74b3acc8d2e75, type: 2}
+  m_Controller: {fileID: 9100000, guid: 94bce45a3401c73409c0caedfc19a845, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
