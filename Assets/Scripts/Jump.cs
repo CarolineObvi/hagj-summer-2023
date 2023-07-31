@@ -22,6 +22,9 @@ public class Jump : MonoBehaviour
 
     private bool desiredJump;
     private bool onGround;
+    
+    //ANIMATION
+    private Animator animator;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +33,9 @@ public class Jump : MonoBehaviour
         groundCheck = GetComponent<GroundCheck>();
 
         defaultGravityScale = 1f;
+
+        animator = GetComponentInChildren<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -44,7 +50,8 @@ public class Jump : MonoBehaviour
         velocity = body.velocity;
 
         if (onGround)
-        {
+        {   
+            animator.SetBool("isJump", false);
             body.gravityScale = 0;
             jumpPhase = 0;
         }
@@ -52,22 +59,27 @@ public class Jump : MonoBehaviour
         if (!standingCollider.enabled)
         {
             desiredJump = false;
+            
         }
 
         if (desiredJump)
         {
+            animator.SetBool("isJump", true);
             desiredJump = false;
             JumpAction();
         }
 
         if (input.RetrieveJumpHoldInput() && body.velocity.y > 0)
         {
+            
             body.gravityScale = upwardMovementMultiplier;
+            animator.SetBool("isJump", true);
         }
 
         else if ((!input.RetrieveJumpHoldInput() || body.velocity.y < 0) && !onGround)
         {
             body.gravityScale = downwardMovementMultiplier;
+            animator.SetBool("isJump", false);
         }
 
         /*else if (body.velocity.y == 0)
@@ -81,7 +93,7 @@ public class Jump : MonoBehaviour
     private void JumpAction()
     {
         if(onGround || jumpPhase < maxAirJumps)
-        {
+        {   
             jumpPhase += 1;
             float jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * jumpHeight);
 
@@ -91,6 +103,7 @@ public class Jump : MonoBehaviour
             }
 
             velocity.y += jumpSpeed;
+            
         }
     }
 }
