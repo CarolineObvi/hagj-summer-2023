@@ -241,8 +241,8 @@ ModelImporter:
       name: Jump
       takeName: Jump
       internalID: 0
-      firstFrame: 0
-      lastFrame: 39
+      firstFrame: 23
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
