@@ -31,9 +31,13 @@ public class GuardController : MonoBehaviour
     public float walkingHearing = 10f;
     public float crouchHearing = 4f;
 
+    //ANIMATION
+    private Animator animator;
+
     void Awake()
     {
         visualLineOfSight.enabled = true;
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Start is called before the first frame update
@@ -87,6 +91,7 @@ public class GuardController : MonoBehaviour
         if (detectionTimer <= 0)
         {
             // SEND TO LOSE SCREEN HERE
+            animator.SetBool("isWalking", false);
             SceneManager.LoadScene("Kill Screen");
             Debug.Log("You lose!");
         }
@@ -97,12 +102,14 @@ public class GuardController : MonoBehaviour
         if (currentWaypoint < waypoints.Length)
         {
             float distance = Vector3.Distance(transform.position, waypoints[currentWaypoint].transform.position);
+            animator.SetBool("isWalking", true);
 
             if (distance < 0.1f)
             {
                 if (waypointsToStopAt.Contains(currentWaypoint) && stopTimer > 0)
                 {
                     stopTimer -= Time.deltaTime;
+                    animator.SetBool("isWalking", false);
                 }
                 else
                 {
