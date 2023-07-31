@@ -6,6 +6,11 @@ public class MenuController : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("Act_0_Church");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
