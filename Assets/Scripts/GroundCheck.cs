@@ -31,7 +31,7 @@ public class GroundCheck : MonoBehaviour
         for (int i = 0; i < collision.contactCount; i++)
         {
             Vector2 normal = collision.GetContact(i).normal;
-            onGround |= normal.y >= 0.9f; 
+            onGround |= normal.y >= 0.3f; 
         }
     }
 
@@ -41,7 +41,7 @@ public class GroundCheck : MonoBehaviour
         PhysicsMaterial2D material = collision.rigidbody.sharedMaterial;
 
         friction = 0;
-
+        
         if (material != null)
         {
             friction = material.friction;

@@ -11,6 +11,8 @@ public class Jump : MonoBehaviour
     [SerializeField, Range(0f, 5f)] private float downwardMovementMultiplier = 3f;
     [SerializeField, Range(0f, 5f)] private float upwardMovementMultiplier = 1.7f;
 
+    [SerializeField] private Collider2D standingCollider;
+
     private Rigidbody2D body;
     private GroundCheck groundCheck;
     private Vector2 velocity;
@@ -43,7 +45,13 @@ public class Jump : MonoBehaviour
 
         if (onGround)
         {
+            body.gravityScale = 0;
             jumpPhase = 0;
+        }
+
+        if (!standingCollider.enabled)
+        {
+            desiredJump = false;
         }
 
         if (desiredJump)
@@ -52,20 +60,20 @@ public class Jump : MonoBehaviour
             JumpAction();
         }
 
-        if (body.velocity.y > 0)
+        if (input.RetrieveJumpHoldInput() && body.velocity.y > 0)
         {
             body.gravityScale = upwardMovementMultiplier;
         }
 
-        else if (body.velocity.y < 0)
+        else if ((!input.RetrieveJumpHoldInput() || body.velocity.y < 0) && !onGround)
         {
             body.gravityScale = downwardMovementMultiplier;
         }
 
-        else if (body.velocity.y == 0)
+        /*else if (body.velocity.y == 0)
         {
             body.gravityScale = defaultGravityScale;
-        }
+        }*/
 
         body.velocity = velocity;
     }
