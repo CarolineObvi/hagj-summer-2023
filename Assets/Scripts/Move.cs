@@ -28,6 +28,7 @@ public class Move : MonoBehaviour
 
     //ANIMATION
     private Animator animator;
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Awake()
@@ -37,6 +38,7 @@ public class Move : MonoBehaviour
         originalMaxSpeed = maxSpeed;
         animator = GetComponentInChildren<Animator>();
         animator.SetFloat("Speed", 0f);
+        //GetComponentInChildren<AudioSource>().Stop();
     }
 
     // Update is called once per frame
@@ -93,6 +95,7 @@ public class Move : MonoBehaviour
         else 
         {
         animator.SetFloat("Speed", 0f);
+        GetComponentInChildren<AudioSource>().Play();
         }
 
         body.velocity = velocity;
