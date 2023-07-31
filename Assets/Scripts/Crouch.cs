@@ -9,7 +9,7 @@ public class Crouch : MonoBehaviour
     [SerializeField] private Transform overheadCheckCollider;
     [SerializeField] private LayerMask obstacleLayer;
     private Move move;
-    const float overheadCheckRadius = 0.2f;
+    const float overheadCheckRadius = 0.5f;
     private bool desiredCrouch;
 
     // Start is called before the first frame update

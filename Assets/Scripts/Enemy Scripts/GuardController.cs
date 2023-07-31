@@ -9,7 +9,7 @@ public class GuardController : MonoBehaviour
     public GameObject[] waypoints; // the path the guard moves across
     [SerializeField] List<int> waypointsToStopAt = new List<int>();
     float stopTimer;
-    float stopLength = 2f;
+    [SerializeField] private float stopLength = 2f;
     private int currentWaypoint = 0;
     public float patrolSpeed = 1.5f;
 
