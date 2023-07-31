@@ -46,7 +46,7 @@ public class Move : MonoBehaviour
         {
             maxSpeed = maxCrouchSpeed;
             animator.SetBool("isCrouch", true);
-            Debug.Log("PRESSED CTRL");
+           // Debug.Log("PRESSED CTRL");
         }
         else
         {
@@ -55,6 +55,14 @@ public class Move : MonoBehaviour
         }
 
         direction.x = input.RetrieveMoveInput();
+        if (direction == new Vector2(-1,0)) 
+        {
+            this.transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else 
+        {
+            this.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
         targetVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed - groundCheck.GetFriction(), 0f);
 
         //Noise
@@ -77,14 +85,14 @@ public class Move : MonoBehaviour
         maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocity.x, maxSpeedChange);
 
-        if (velocity.x > 0) 
+        if (velocity.x > 0 || velocity.x < 0) 
         {
         animator.SetFloat("Speed", 0.5f);
         }
 
         else 
         {
-            animator.SetFloat("Speed", 0f);
+        animator.SetFloat("Speed", 0f);
         }
 
         body.velocity = velocity;
