@@ -87,6 +87,7 @@ public class GuardController : MonoBehaviour
         if (detectionTimer <= 0)
         {
             // SEND TO LOSE SCREEN HERE
+            SceneManager.LoadScene("Kill Screen");
             Debug.Log("You lose!");
         }
     }

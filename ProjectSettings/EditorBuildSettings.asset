@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Act Scenes/Act_0_Church.unity
+    guid: f05f09e7059ca864484d638de4ced84b
+  - enabled: 1
+    path: Assets/Scenes/Act Scenes/Act_1.unity
+    guid: befa24ca75240b644be8d3ba8d6e2d91
+  - enabled: 1
+    path: Assets/Scenes/Act Scenes/Coming Soon.unity
+    guid: a67e3c6872c7e20489262970b23f578a
+  - enabled: 1
+    path: Assets/Scenes/Act Scenes/Kill Screen.unity
+    guid: 1eddf37bec0913e4bbb70b5b92085f85
   m_configObjects: {}
