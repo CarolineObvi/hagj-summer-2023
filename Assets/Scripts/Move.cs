@@ -64,7 +64,6 @@ public class Move : MonoBehaviour
     void FixedUpdate()
     {
         onGround = groundCheck.GetOnGround();
-        Debug.Log(groundCheck.GetOnGround());
         velocity = body.velocity;
 
         acceleration = onGround ? maxAcceleration : maxAirAcceleration;

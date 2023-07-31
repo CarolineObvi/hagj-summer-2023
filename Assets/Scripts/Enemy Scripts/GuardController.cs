@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GuardController : MonoBehaviour
 {
     [Header("Patrol")]
     public GameObject[] waypoints; // the path the guard moves across
+    [SerializeField] List<int> waypointsToStopAt = new List<int>();
+    float stopTimer;
+    [SerializeField] private float stopLength = 2f;
     private int currentWaypoint = 0;
     public float patrolSpeed = 1.5f;
 
@@ -27,6 +31,10 @@ public class GuardController : MonoBehaviour
     public float walkingHearing = 10f;
     public float crouchHearing = 4f;
 
+    void Awake()
+    {
+        visualLineOfSight.enabled = true;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,25 +44,25 @@ public class GuardController : MonoBehaviour
 
         originalViewDistance = viewDistance;
         detectionTimer = detectionLength;
+        
         visualLineOfSight.useWorldSpace = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Patrol();
-        Debug.Log(Vector2.Distance(transform.position, player.transform.position));
-
         visualLineOfSight.SetPosition(0, transform.position);
 
         if (CanSeePlayer())
         {
+            stopTimer = stopLength;
             isDetectingPlayer = true;
             visualLineOfSight.SetPosition(1, player.position);
-            Detection();
         }
+
         else
         {
+            Patrol();
             RaycastHit2D hit;
             hit = Physics2D.Raycast(transform.position, transform.forward, viewDistance, viewMask);
             if (hit)
@@ -78,6 +86,7 @@ public class GuardController : MonoBehaviour
 
         if (detectionTimer <= 0)
         {
+            // SEND TO LOSE SCREEN HERE
             Debug.Log("You lose!");
         }
     }
@@ -90,9 +99,17 @@ public class GuardController : MonoBehaviour
 
             if (distance < 0.1f)
             {
-                currentWaypoint++;
+                if (waypointsToStopAt.Contains(currentWaypoint) && stopTimer > 0)
+                {
+                    stopTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    stopTimer = stopLength;
+                    currentWaypoint++;
+                }
             }
-            else if (!isDetectingPlayer)
+            else
             {
                 Vector3 direction = waypoints[currentWaypoint].transform.position - transform.position;
                 Quaternion toRotation = Quaternion.LookRotation(direction);
@@ -106,14 +123,8 @@ public class GuardController : MonoBehaviour
         } 
     }
 
-    private void Detection()
-    {
-        Debug.Log("Guard can see!");
-    }
-
     bool CanSeePlayer()
     {
-        
         if (Vector3.Distance(transform.position, player.position) < viewDistance)
         {
             Vector3 dirToPlayer = (player.position - transform.position).normalized;
@@ -121,7 +132,7 @@ public class GuardController : MonoBehaviour
 
             if (angleBetweenGuardAndPlayer < viewAngle / 2f)
             {
-                if (!Physics2D.Linecast(transform.position, player.position, viewMask))
+                if (!Physics.Linecast(transform.position, player.position, viewMask))
                 {
                     if (!isDetectingPlayer)
                     {
@@ -135,14 +146,6 @@ public class GuardController : MonoBehaviour
         return false;
     }
 
-
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay (transform.position, transform.forward * viewDistance); // draws ray to represent vision distance
-    }
-
     IEnumerator LengthenView()
     {
         for (int i = 0; i < 4; i++)
@@ -150,5 +153,13 @@ public class GuardController : MonoBehaviour
             yield return new WaitForSeconds(.75f);
             viewDistance += viewDistance * 0.6f;
         }
+    }
+
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay (transform.position, transform.forward * viewDistance); // draws ray to represent vision distance
     }
 }
