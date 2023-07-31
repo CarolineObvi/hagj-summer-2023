@@ -172,11 +172,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   detectionLength: 2.5
+  audioDetectionLength: 3
   viewDistance: 5.87
   viewAngle: 90
   visualLineOfSight: {fileID: 7252245944247647191}
   playerSoundLevels: {fileID: 0}
   walkingHearing: 7
+  crouchHearing: 4
 --- !u!1 &3497905053077385184
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3573444279316993504
 Transform:
   m_ObjectHideFlags: 0
