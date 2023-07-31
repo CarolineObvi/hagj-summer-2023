@@ -25,6 +25,9 @@ public class Move : MonoBehaviour
     private float maxSpeedChange;
     private float acceleration;
     private bool onGround;
+
+    //ANIMATION
+    private Animator animator;
     
     // Start is called before the first frame update
     void Awake()
@@ -32,6 +35,8 @@ public class Move : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
         originalMaxSpeed = maxSpeed;
+        animator = GetComponentInChildren<Animator>();
+        animator.SetFloat("Speed", 0f);
     }
 
     // Update is called once per frame
@@ -40,13 +45,24 @@ public class Move : MonoBehaviour
         if (!standingCollider.enabled)
         {
             maxSpeed = maxCrouchSpeed;
+            animator.SetBool("isCrouch", true);
+           // Debug.Log("PRESSED CTRL");
         }
         else
         {
             maxSpeed = originalMaxSpeed;
+            animator.SetBool("isCrouch", false);
         }
 
         direction.x = input.RetrieveMoveInput();
+        if (direction == new Vector2(-1,0)) 
+        {
+            this.transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else 
+        {
+            this.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
         targetVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed - groundCheck.GetFriction(), 0f);
 
         //Noise
@@ -65,10 +81,19 @@ public class Move : MonoBehaviour
     {
         onGround = groundCheck.GetOnGround();
         velocity = body.velocity;
-
         acceleration = onGround ? maxAcceleration : maxAirAcceleration;
         maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocity.x, maxSpeedChange);
+
+        if (velocity.x > 0 || velocity.x < 0) 
+        {
+        animator.SetFloat("Speed", 0.5f);
+        }
+
+        else 
+        {
+        animator.SetFloat("Speed", 0f);
+        }
 
         body.velocity = velocity;
     }
